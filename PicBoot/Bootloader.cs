@@ -545,7 +545,10 @@ namespace PicBoot
                 status = 1; // Working hard ...
                 log_queue?.TryAdd("Starting application code...\r\n");
                 DoCmd(BootCmd.WR_DATA, cp.data_range.last, 1, new byte[] { 0 }, 0, 1);
+                int tim = sp.ReadTimeout;
+                sp.ReadTimeout = 1; // there is no response to following cmd
                 DoCmd(BootCmd.RESET, 0, 0, null, 0, 0);
+                sp.ReadTimeout = tim;
             }
 
             return ret_val;

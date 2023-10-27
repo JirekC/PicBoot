@@ -88,7 +88,7 @@
 		<first>0</first>
 		<last>527FF</last>
 	</prog>
-	<!-- last pages for bootloader and config words (last addr: 557FF)  -->
+	<!-- last pages reserved-for-bootloader and config words (last addr: 557FF)  -->
 	<data>
 		<first>000000</first>
 		<last>0007F</last>
