@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cpu_list>
+
+<cpu>
+	<name>PIC24FJ512GL408_FULLMEM</name>
+	<timeout>2500</timeout>
+	<baud>576000</baud>
+	<write_block>512</write_block>
+	<read_block>4</read_block>
+	<erase_block>4096</erase_block>
+	<max_pkt_size>2048</max_pkt_size>
+	<!-- bootloader addresses by single Byte, so there is twice amount of addrs -->
+	<bytes_per_addr>1</bytes_per_addr>
+<!--	<prog>
+		<first>0</first>
+		<last>AC000</last>
+	</prog>  -->
+	<prog>
+		<!-- external data flash -->
+		<first>100000</first>
+		<last>10FFFF</last>
+	</prog>
+	<data>
+		<first>000000</first>
+		<last>0007F</last>
+	</data>
+</cpu>
+
+<cpu>
+	<name>PIC24FJ512GL408_LG2_5</name>
+	<timeout>2500</timeout>
+	<baud>576000</baud>
+	<write_block>512</write_block>
+	<read_block>4</read_block>
+	<erase_block>4096</erase_block>
+	<max_pkt_size>2048</max_pkt_size>
+	<!-- bootloader addresses by single Byte, so there is twice amount of addrs -->
+	<bytes_per_addr>1</bytes_per_addr>
+	<prog>
+		<!-- RESET + IVT + APP-->
+		<first>0</first>
+		<last>A8FFF</last>
+	</prog>
+	<!--  here are BOOTLOADER + CFG  (last addr: AC000 with boot & config pages)  -->
+	<prog>
+		<!-- external data flash (only 1 MB for now) -->
+		<first>100000</first>
+		<last>200000</last>
+	</prog>
+	<data>
+		<first>000000</first>
+		<last>0007F</last>
+	</data>
+</cpu>
+
+<cpu>
+	<name>PIC24FJ256DA210_Go_FULLMEM</name>
+	<timeout>2500</timeout>
+	<baud>115200</baud>
+	<write_block>256</write_block>
+	<read_block>4</read_block>
+	<erase_block>2048</erase_block>
+	<max_pkt_size>2048</max_pkt_size>
+	<!-- bootloader addresses by single Byte, so there is twice amount of addrs -->
+	<bytes_per_addr>1</bytes_per_addr>
+	<prog>
+		<first>0</first>
+		<last>557FF</last> 
+	</prog>
+	<!--  last page reserved - contains config words (last addr: 557FF with config page)  -->
+	<data>
+		<first>000000</first>
+		<last>0007F</last>
+	</data>
+</cpu>
+
+<cpu>
+	<name>PIC24FJ256DA210_Go</name>
+	<timeout>2500</timeout>
+	<baud>115200</baud>
+	<write_block>256</write_block>
+	<read_block>4</read_block>
+	<erase_block>2048</erase_block>
+	<max_pkt_size>2048</max_pkt_size>
+	<!-- app-area: addresses by single Byte, so there is twice amount of addrs -->
+	<bytes_per_addr>1</bytes_per_addr>
+	<prog>
+		<first>0</first>
+		<last>527FF</last>
+	</prog>
+	<!-- last pages for bootloader and config words (last addr: 557FF)  -->
+	<data>
+		<first>000000</first>
+		<last>0007F</last>
+	</data>
+</cpu>
+
+<cpu>
+	<name>PIC18F4620</name>
+	<timeout>2500</timeout>
+	<baud>115200</baud>
+	<write_block>8</write_block>
+	<read_block>1</read_block>
+	<erase_block>64</erase_block>
+	<max_pkt_size>128</max_pkt_size> <!-- data payload only - except CMD, LEN, 3*ADDR .. CHKSUM -->
+	<bytes_per_addr>1</bytes_per_addr>
+	<prog>
+		<first>000200</first>
+		<last>00FFFF</last>
+	</prog>
+	<prog>
+		<first>030000</first>
+		<last>0303FF</last>
+	</prog>
+	<data>
+		<first>F00000</first>
+		<last>F003FF</last>
+	</data>
+</cpu>
+
+<cpu>
+	<name>PIC18F87K90</name>
+	<timeout>2500</timeout>
+	<baud>115200</baud>
+	<write_block>8</write_block>
+	<read_block>1</read_block>
+	<erase_block>64</erase_block>
+	<max_pkt_size>128</max_pkt_size> <!-- data payload only - except CMD, LEN, 3*ADDR .. CHKSUM -->
+	<bytes_per_addr>1</bytes_per_addr>
+	<prog>
+		<first>000800</first>
+		<last>01FFFF</last>
+	</prog>
+	<data>
+		<first>F00000</first>
+		<last>F003FF</last>
+	</data>
+</cpu>
+
+</cpu_list>

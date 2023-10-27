@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31702.278
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PicBoot", "PicBoot\PicBoot.csproj", "{96F10EA8-33D3-48D8-B610-7CF051BA4A0E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{96F10EA8-33D3-48D8-B610-7CF051BA4A0E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{96F10EA8-33D3-48D8-B610-7CF051BA4A0E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{96F10EA8-33D3-48D8-B610-7CF051BA4A0E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{96F10EA8-33D3-48D8-B610-7CF051BA4A0E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {23D9305C-4048-4E05-9690-CD3FAEDCAA27}
+	EndGlobalSection
+EndGlobal
