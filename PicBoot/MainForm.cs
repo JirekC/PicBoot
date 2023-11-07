@@ -75,9 +75,9 @@ namespace PicBoot
                 {
                     baud = 0;
                 }
-                if(baud < 300 || baud > 1000000)
+                if(baud < 300 || baud > 3000000)
                 {
-                    tbLogs.AppendText("ERROR: Speed must be a number <300 .. 1000000>\r\n");
+                    tbLogs.AppendText("ERROR: Speed must be a number <300 .. 3000000>\r\n");
                     return;
                 }
                 if(!bl.Open(cbPort.SelectedItem.ToString(), baud, cp.timeout))
@@ -169,11 +169,18 @@ namespace PicBoot
                     log_queue.TryAdd($"ERROR: Bad program memory region: 0x{r.first:X} .. 0x{r.last:X}\r\n");
                     continue;
                 }
-                prog_img.blocks.Add(new MemBlock()
+                var mb = new MemBlock()
                 {
                     first_addr = r.first,
                     data = new byte[(r.last - r.first + 1) * cp.bytes_per_addr]
-                });
+                };
+                // init memory block to "prog_clear_pattern"
+                for (int i = 0; i < mb.data.Length; i++)
+                {
+                    int shift = (i % 4) * 8;
+                    mb.data[i] = (byte)(cp.prog_clear_pattern >> shift);
+                }
+                prog_img.blocks.Add(mb);
             }
             // load from .hex file
             if (openFileDialog.ShowDialog() != DialogResult.OK)

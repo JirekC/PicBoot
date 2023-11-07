@@ -57,6 +57,12 @@ namespace PicBoot
                     else
                         cp.timeout = 2000; // default 2 sec 
 
+                    b = cpu_node.SelectSingleNode("prog_clear_pattern")?.InnerText;
+                    if (b != null)
+                        cp.prog_clear_pattern = uint.Parse(b, System.Globalization.NumberStyles.HexNumber);
+                    else
+                        cp.prog_clear_pattern = 0xFFFFFFFF; // default: clear memory FFFF....
+
                     cp.write_block = uint.Parse(cpu_node.SelectSingleNode("write_block").InnerText);
                     cp.read_block = uint.Parse(cpu_node.SelectSingleNode("read_block").InnerText);
                     cp.erase_block = uint.Parse(cpu_node.SelectSingleNode("erase_block").InnerText);

@@ -56,14 +56,15 @@
 <cpu>
 	<name>PIC24FJ256DA210_Go_FULLMEM</name>
 	<timeout>2500</timeout>
-	<baud>115200</baud>
+	<baud>1000000</baud>
 	<write_block>256</write_block>
 	<read_block>4</read_block>
 	<erase_block>2048</erase_block>
 	<max_pkt_size>2048</max_pkt_size>
 	<!-- bootloader addresses by single Byte, so there is twice amount of addrs -->
 	<bytes_per_addr>1</bytes_per_addr>
-	<prog>
+  <prog_clear_pattern>00FFFFFF</prog_clear_pattern>
+  <prog>
 		<first>0</first>
 		<last>557FF</last> 
 	</prog>
@@ -77,16 +78,17 @@
 <cpu>
 	<name>PIC24FJ256DA210_Go</name>
 	<timeout>2500</timeout>
-	<baud>115200</baud>
+	<baud>1000000</baud>
 	<write_block>256</write_block>
 	<read_block>4</read_block>
 	<erase_block>2048</erase_block>
 	<max_pkt_size>2048</max_pkt_size>
 	<!-- app-area: addresses by single Byte, so there is twice amount of addrs -->
 	<bytes_per_addr>1</bytes_per_addr>
+  <prog_clear_pattern>00FFFFFF</prog_clear_pattern>
 	<prog>
 		<first>0</first>
-		<last>527FF</last>
+		<last>51FFF</last>
 	</prog>
 	<!-- last pages reserved-for-bootloader and config words (last addr: 557FF)  -->
 	<data>

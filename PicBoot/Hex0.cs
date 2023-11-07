@@ -28,7 +28,7 @@ namespace PicBoot
          * address: only low 16 bits are used
          * length must be 0 .. 255
          */
-        protected static string CreateSingleLine(uint address, byte rec_type, byte[] data, uint offset, uint length)
+        protected string CreateSingleLine(uint address, byte rec_type, byte[] data, uint offset, uint length)
         {
             address &= 0xFFFF;
             // write line-head
@@ -49,7 +49,7 @@ namespace PicBoot
         /*
          * Generates 0x04 type record. Uses upper 16 bits of address
          */
-        protected static string NewAddressBlock(uint address)
+        protected string NewAddressBlock(uint address)
         {
             byte[] line_data = new byte[2];
             line_data[0] = (byte)(address >> 24);
@@ -101,7 +101,7 @@ namespace PicBoot
             writer.Close();
         }
 
-        public int GetBlockIdxByAddr(uint addr, uint bytes_per_addr)
+        protected int GetBlockIdxByAddr(uint addr, uint bytes_per_addr)
         {
             int idx = 0;
             foreach(var mb in blocks)
@@ -206,86 +206,6 @@ namespace PicBoot
             reader.Close();
 
             return ret_val;
-        }
-
-        /*
-         * Append memory block to the end of file before last ":00000001FF" line.
-         * It is caller responsibility to not overlap with memory-blocks already in file.
-         * Uses I32HEX format, must contain EOF line ":00000001FF".
-         */
-        public static void AppendBlockToFile(string file, string ofile, uint bytes_per_addr, MemBlock mb)
-        {
-            StreamReader reader = new StreamReader(file);
-            List<string> temp = new List<string>();
-            string line;
-            uint line_cntr = 0;
-
-            // load from file, line-by-line
-            while ((line = reader.ReadLine()) != null)
-            {
-                line_cntr++;
-                line = line.Trim(); // remove whitespaces from begin and end of line
-                if (line.Length > 0)
-                {
-                    if (line[0] != ':')
-                    {
-                        continue; // non IHEX line
-                    }
-                }
-                else
-                {
-                    continue; // empty line
-                }
-                if (line == ":00000001FF")
-                {
-                    // EOF reached -> add new block to the end, just before this line
-                    uint addrs_per_line = 16 / bytes_per_addr;
-                    byte[] line_data = new byte[addrs_per_line * bytes_per_addr];
-                    uint mbidx = 0;
-                    uint addr_cntr = mb.first_addr;
-
-                    temp.Add(NewAddressBlock(addr_cntr)); // upper 16 bits of block's address
-                    while (mbidx < mb.data.Length)
-                    {
-                        uint line_len = 0; // in words (bytes_per_addr) units
-                        uint start_idx = mbidx;
-                        for (uint i = 0; i < addrs_per_line; i++)
-                        {
-                            Array.Copy(mb.data, mbidx, line_data, i * bytes_per_addr, bytes_per_addr);
-                            mbidx += bytes_per_addr;
-                            line_len++;
-                            if (mbidx >= mb.data.Length)
-                                break; // end of block reached
-                            if ((addr_cntr & 0xFFFF0000) != ((addr_cntr + line_len) & 0xFFFF0000))
-                            {
-                                break; // 64 kB page boundary reached
-                            }
-                        }
-                        temp.Add(CreateSingleLine(addr_cntr, 0x00, mb.data, start_idx, line_len * bytes_per_addr));
-                        if ((addr_cntr & 0xFFFF0000) != ((addr_cntr + line_len) & 0xFFFF0000))
-                        {
-                            // 64 kB page boundary reached
-                            temp.Add(NewAddressBlock(addr_cntr + line_len));
-                        }
-                        addr_cntr += line_len;
-                    }
-
-                    temp.Add(":00000001FF"); // EOF
-                    break; // while
-                }
-                temp.Add(line);
-            }
-            reader.Close();
-            if (ofile == null)
-            {
-                ofile = file; // output file not defined, reuse input file
-            }
-            StreamWriter writer = new StreamWriter(ofile);
-            foreach (string l in temp)
-            {
-                writer.WriteLine(l);
-            }
-            writer.Close();
         }
 
     }
